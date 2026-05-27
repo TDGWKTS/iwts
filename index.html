@@ -9,14 +9,15 @@
         body { background: #e9f0ee; font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif; padding: 16px 12px; }
         .form-container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08); overflow: hidden; }
         .doc-header { background: #004d40; padding: 20px 24px; color: white; text-align: left; }
-        .doc-header .title-main { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
-        .doc-header .title-sub { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
-        .doc-header .contract-line { font-size: 0.8rem; opacity: 0.9; margin-bottom: 4px; }
-        .doc-header .version-line { font-size: 0.8rem; opacity: 0.85; }
+	.doc-header .title-main { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+	.doc-header .title-sub { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+	.doc-header .contract-line { font-size: 0.8rem; opacity: 0.9; margin-bottom: 4px; }
+	.doc-header .version-line { font-size: 0.8rem; opacity: 0.85; }
         .meta-bar { background: #f9fcfb; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid #d4e2de; align-items: center; justify-content: space-between; }
         .meta-item { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; background: white; padding: 5px 12px; border-radius: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .meta-item label { font-weight: 700; color: #00695c; font-size: 0.75rem; }
         .required-star { color: #c62828; }
+        
         input, select, textarea { padding: 8px 12px; border-radius: 40px; border: 1px solid #cbdcd6; background: white; font-family: 'Courier New', monospace; font-weight: 500; font-size: 0.8rem; width: 100%; }
         textarea { border-radius: 20px; }
         .section { margin-top: 2px; }
@@ -26,43 +27,61 @@
         .section-content { transition: all 0.3s ease; overflow: hidden; }
         .section-content.collapsed { display: none; }
         .field-row { padding: 10px 16px; border-bottom: 1px solid #edf3f0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
-        .field-row .label { font-weight: 700; font-size: 0.8rem; color: #1a3e36; min-width: 280px; width: 40%; word-break: break-word; }
+        .field-row .label { font-weight: 700; font-size: 0.8rem; color: #1a3e36; min-width: 200px; width: 35%; word-break: break-word; }
         .field-row .input-area { flex: 1; min-width: 150px; }
         .inline-cluster { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; }
         .inline-cluster select, .inline-cluster input { width: auto; flex: 1; min-width: 80px; }
         .checkbox-group { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
         .checkbox-group label { display: inline-flex; align-items: center; gap: 5px; font-weight: normal; font-size: 0.8rem; }
-        .checkbox-inline { display: inline-flex !important; align-items: center; gap: 6px; margin-right: 16px; white-space: nowrap; }
+        .separator-light { margin: 8px 0 4px 0; border-top: 2px dashed #b2dfdb; position: relative; }
+        .separator-label { font-size: 0.7rem; font-weight: 600; color: #00796b; background: #e0f2f1; display: inline-block; padding: 2px 12px; border-radius: 20px; margin-left: 16px; letter-spacing: 0.5px; }
+        
         .btn-export { background: #00695c; border: none; padding: 12px 20px; font-weight: bold; font-size: 1rem; border-radius: 60px; color: white; cursor: pointer; transition: 0.2s; width: calc(100% - 40px); margin: 20px; }
         .btn-export:hover { background: #00897b; }
         .btn-part2 { background: #ff8f00; border: none; padding: 12px 20px; font-weight: bold; font-size: 1rem; border-radius: 60px; color: white; cursor: pointer; transition: 0.2s; width: 100%; }
-        .btn-part2:hover { background: #ef6c00; }
-        .btn-part2.active { background: #00695c; }
+.btn-part2:hover { background: #ef6c00; }
+.btn-part2.active { background: #00695c; }
+        
         .legend { background: #fff7e5; padding: 10px 16px; font-size: 0.65rem; color: #a86407; border-top: 1px solid #ffe0b5; }
         .legend p { margin: 3px 0; }
         .auto-save-badge { background: #e8f5e9; border-radius: 40px; padding: 4px 10px; font-size: 0.7rem; font-weight: 600; color: #2e7d32; display: inline-flex; align-items: center; gap: 4px; }
-        .part2-panel { background: white; border: 1px solid #d4e2de; border-radius: 16px; margin: 8px 12px 0 12px; overflow: hidden; display: none; }
-        .part2-panel.show { display: block; }
-        .part2-header { background: #ff8f00; color: white; padding: 10px 16px; font-weight: bold; font-size: 0.9rem; text-align: center; }
-        .part2-subsection { background: white; border-bottom: 1px solid #edf3f0; }
-        .part2-subsection .sub-header { background: #fff3e0; padding: 8px 16px; font-weight: bold; font-size: 0.85rem; color: #e65100; border-left: 4px solid #ff8f00; margin-bottom: 0; }
+        
+        /* PART II */
+.part2-panel {
+    background: white;
+    border: 1px solid #d4e2de;
+    border-radius: 16px;
+    margin: 8px 12px 0 12px;
+    overflow: hidden;
+    display: none;
+}
+.part2-panel.show { display: block; }
+.part2-header { background: #ff8f00; color: white; padding: 10px 16px; font-weight: bold; font-size: 0.9rem; text-align: center; }
+.part2-subsection { background: white; border-bottom: 1px solid #edf3f0; }
+.part2-subsection .sub-header { background: #fff3e0; padding: 8px 16px; font-weight: bold; font-size: 0.85rem; color: #e65100; border-left: 4px solid #ff8f00; margin-bottom: 0; }
+.part2-panel .field-row { background: white; }
+        
         @media (max-width: 700px) {
             .field-row { flex-direction: column; align-items: flex-start; }
             .field-row .label { width: 100%; }
             .inline-cluster { flex-direction: column; align-items: stretch; }
             .inline-cluster select, .inline-cluster input { width: 100%; }
             .meta-bar { flex-direction: column; align-items: stretch; }
+            .meta-item { justify-content: space-between; }
+            .checkbox-group { flex-direction: column; align-items: flex-start; }
         }
+        .checkbox-inline { display: inline-flex !important; align-items: center; gap: 6px; margin-right: 16px; white-space: nowrap; }
+        .checkbox-group-inline { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
     </style>
 </head>
 <body>
 <div class="form-container">
     <div class="doc-header">
-        <div class="title-main">DAILY INSPECTION FORM</div>
-        <div class="title-sub">ISLAND WEST TRANSFER STATION</div>
-        <div class="contract-line">Contract No. EP/SP/76/14</div>
-        <div class="version-line">DOIF-IWTS-001 &amp; 002 ver. 4</div>
-    </div>
+    <div class="title-main">DAILY INSPECTION FORM</div>
+    <div class="title-sub">ISLAND WEST TRANSFER STATION</div>
+    <div class="contract-line">Contract No. EP/SP/76/14</div>
+    <div class="version-line">DOIF-IWTS-001 &amp; 002 ver. 4</div>
+</div>
 
     <div class="meta-bar">
         <div class="meta-item"><label>📅 DATE <span class="required-star">*</span></label><input type="date" id="inspectDate"></div>
@@ -74,10 +93,68 @@
     </div>
 
     <form id="inspectionForm">
-        <!-- SECTION 1-7, 9-13 保持與之前相同，此處省略以節省篇幅 -->
-        <!-- 實際使用時請保留完整的 SECTION 1-7, 9-13 -->
-        
-        <!-- ========== SECTION 8: WASTEWATER TREATMENT PLANT (完整 8 個輸入欄位) ========== -->
+        <!-- ========================= SECTION 1 ========================= -->
+        <div class="section"><div class="section-title" data-section="sec1">1. WEIGHBRIDGE AREA <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec1">
+                <div class="field-row"><span class="label">1.1 Weighbridge area cleanliness</span><div class="input-area"><select name="wb_clean"><option value="">Select</option><option value="Y">Y (Yes)</option><option value="N">N (No)</option><option value="NA">NA</option></select></div></div>
+                <div class="field-row"><span class="label">1.2 Traffic smoothness / Drop Bar</span><div class="input-area"><select name="wb_traffic"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">1.3 Weighbridge display / Traffic light (In)</span><div class="input-area"><select name="wb_display_in"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">1.4 Weighbridge display / Traffic light (Out)</span><div class="input-area"><select name="wb_display_out"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">1.5 Computer / Printer</span><div class="input-area"><select name="wb_computer"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">1.6 Operator / Lighting</span><div class="input-area"><select name="wb_operator"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">1.7 CCTV system</span><div class="input-area"><select name="wb_cctv"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec2">2. RCV ACCESS <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec2">
+                <div class="field-row"><span class="label">2.1 Channel indicator / Traffic light</span><div class="input-area"><select name="rcv_channel"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">2.2 RCV access cleanliness / Roller Shutter</span><div class="input-area"><select name="rcv_clean"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">2.3 Traffic smoothness / Drop Bar</span><div class="input-area"><select name="rcv_traffic"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">2.4 Air Curtain / Atomising system</span><div class="input-area"><select name="rcv_air_curtain"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec3">3. VEHICLE WASHING PLANT <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec3">
+                <div class="field-row"><span class="label">3.1 Water spraying / brushing</span><div class="input-area"><select name="wash_spray"><option value="">Select</option><option value="Y / NA">Y / NA</option><option value="N / NA">N / NA</option></select></div></div>
+                <div class="field-row"><span class="label">3.2 Drop Bar / Traffic Light</span><div class="input-area"><select name="wash_dropbar"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec4">4. TIPPING HALL <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec4">
+                <div class="field-row"><span class="label">4.1 Traffic smoothness</span><div class="input-area"><select name="th_traffic"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.2 Tipping hall cleanliness / Lighting</span><div class="input-area"><select name="th_clean_light"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.3 Traffic light / Channel no.</span><div class="input-area"><select name="th_traffic_light"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.4 Spray / Dust</span><div class="input-area"><select name="th_spray_dust"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.5 Ventilation fan / Odour</span><div class="input-area"><select name="th_ventilation"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.6 Wheel stopper condition / maintenance</span><div class="input-area"><select name="th_wheel_stopper"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.7 Infrared heat detection / Overhead detection</span><div class="input-area"><select name="th_heat_detection"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">4.8 Dust and odour suppressing system</span><div class="input-area"><select name="th_odour_suppress"><option value="">Select</option><option value="Y">Y (OK)</option><option value="N">N (Issue)</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec5">5. CONTROL ROOM <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec5">
+                <div class="field-row"><span class="label">5.1 Operator</span><div class="input-area"><input type="text" name="cr_operator" placeholder="(Number / Name)"></div></div>
+                <div class="field-row"><span class="label">5.2 Odour / Dust</span><div class="input-area"><select name="cr_odour"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">5.3 Air conditioning / Lighting</span><div class="input-area"><select name="cr_ac_light"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec6">6. WET SCRUBBERING SYSTEM <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec6">
+                <div class="field-row"><span class="label">6.1 Unit 1 / Unit 2</span><div class="input-area"><select name="ws_unit"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">6.2 Air scrubber cleanliness</span><div class="input-area"><select name="ws_clean"><option value="">Select</option><option value="Y">Y (Clean)</option><option value="N">N (Dirty)</option></select></div></div>
+                <div class="field-row"><span class="label">6.3 Odour / Dust</span><div class="input-area"><select name="ws_odour"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">6.4 Circulation system / Chemicals</span><div class="input-area"><select name="ws_circulation"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec7">7. COMPACTOR HALL <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec7">
+                <div class="field-row"><span class="label">7.1 Compactor hall cleanliness</span><div class="input-area"><select name="ch_clean"><option value="">Select</option><option value="Y">Y (Clean)</option><option value="N">N (Dirty)</option></select></div></div>
+                <div class="field-row"><span class="label">7.2 Odour / Dust</span><div class="input-area"><select name="ch_odour"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">7.3 Lighting / Traffic smoothness</span><div class="input-area"><select name="ch_light_traffic"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">7.4 Tractor / Trailer</span><div class="input-area"><select name="ch_tractor"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
+        </div>
+        <!-- ========== SECTION 8: WASTEWATER TREATMENT PLANT ========== -->
         <div class="section">
             <div class="section-title" data-section="sec8">8. WASTEWATER TREATMENT PLANT <span class="toggle-icon">▼</span></div>
             <div class="section-content" id="sec8">
@@ -100,42 +177,134 @@
                 <div class="field-row"><span class="label">8.5.1 Filter Press Room - Odour / Dust / Ventilation fan</span><div class="input-area"><select name="wwt_filterpress"><option value="">Select</option><option value="Y / Y / Y">Y / Y / Y</option><option value="N / N / N">N / N / N</option><option value="Y / N / Y">Y / N / Y</option><option value="N / Y / N">N / Y / N</option></select></div></div>
             </div>
         </div>
-        
-        <!-- SECTION 9-13 保持相同 -->
-        
-        <div style="margin: 20px;"><button type="button" id="part2Btn" class="btn-part2">📋 PART II - OPERATIONAL & ENVIRONMENTAL PERFORMANCE</button></div>
-        <div id="part2Panel" class="part2-panel">
-            <div class="part2-header">📋 PART II - OPERATIONAL & ENVIRONMENTAL PERFORMANCE</div>
-            <!-- PART II 內容與之前相同 -->
+        <div class="section"><div class="section-title" data-section="sec9">9. CONTAINER ACCESS <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec9">
+                <div class="field-row"><span class="label">9.1 Container access cleanliness / Roller shutter</span><div class="input-area"><select name="ca_clean"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">9.2 Lighting / Odour</span><div class="input-area"><select name="ca_light_odour"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">9.3 Air Curtain / Atomising system</span><div class="input-area"><select name="ca_air_curtain"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+            </div>
         </div>
-        
+        <div class="section"><div class="section-title" data-section="sec10">10. BERTH AREA <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec10">
+                <div class="field-row"><span class="label">10.1 Vessel name</span><div class="input-area"><select name="ba_vessel"><option value="">Select</option><option value="Tsing Chau">Tsing Chau</option><option value="Nim Wan">Nim Wan</option><option value="Other">Other</option></select></div></div>
+                <div class="field-row"><span class="label">10.2 Berth area cleanliness / Atomising System</span><div class="input-area"><select name="ba_clean"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">10.3 Traffic smoothness</span><div class="input-area"><select name="ba_traffic"><option value="">Select</option><option value="Y">Y (OK)</option><option value="N">N (Issue)</option></select></div></div>
+                <div class="field-row"><span class="label">10.4 Container stockpile</span><div class="input-area"><input type="text" name="ba_stockpile" placeholder="(Remarks / Count)"></div></div>
+                <div class="field-row"><span class="label">10.5 Container handling unit (CHU)</span><div class="input-area"><select name="ba_chu"><option value="">Select</option><option value="Y">Y (OK)</option><option value="N">N (Fault)</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec11">11. SPIRAL RAMP <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec11">
+                <div class="field-row"><span class="label">11.1 Spiral ramp cleanliness / Lighting</span><div class="input-area"><select name="sr_clean"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">11.2 Traffic smoothness</span><div class="input-area"><select name="sr_traffic"><option value="">Select</option><option value="Y / Y">Y / Y</option><option value="N / N">N / N</option><option value="Y / N">Y / N</option><option value="N / Y">N / Y</option></select></div></div>
+                <div class="field-row"><span class="label">11.3 Auto Cleaning System</span><div class="input-area"><select name="sr_auto_clean"><option value="">Select</option><option value="Y">Y (OK)</option><option value="N">N (Issue)</option></select></div></div>
+            </div>
+        </div>
+        <div class="section"><div class="section-title" data-section="sec12">12. OTHERS <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec12">
+                <div class="field-row"><span class="label">12.1 Road sweeper cleaning streets</span><div class="input-area"><select name="ot_roadsweeper_streets"><option value="">Select</option><option value="Y">Y (Done)</option><option value="N">N (Not done)</option></select></div></div>
+                <div class="field-row"><span class="label">12.2 Road sweeper cleaning site area</span><div class="input-area"><select name="ot_roadsweeper_site"><option value="">Select</option><option value="Y">Y (Done)</option><option value="N">N (Not done)</option></select></div></div>
+                <div class="field-row"><span class="label">12.3 Odour Monitoring System</span><div class="input-area"><select name="ot_odour_monitor"><option value="">Select</option><option value="Y">Y (OK)</option><option value="N">N (Issue)</option></select></div></div>
+            </div>
+        </div>
+        <!-- SECTION 13 with Non-op, separator, start/end times, checkboxes inline -->
+        <div class="section">
+            <div class="section-title" data-section="sec13">13. OPERATIONAL STATUS & EQUIPMENT MONITORING <span class="toggle-icon">▼</span></div>
+            <div class="section-content" id="sec13">
+                <div class="field-row"><span class="label">⏱️ Non-operation hours (2330-0730)</span><div class="input-area"><select name="op_non_op_hours"><option value="">Select AM/PM shift</option><option value="AM (After 2330)">AM (After 2330)</option><option value="PM (Before 0730)">PM (Before 0730)</option><option value="Both Checked">Both Checked</option><option value="N/A">N/A</option></select></div></div>
+                <div class="field-row"><span class="label">Ventilation fans</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_vent_fans" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Mainfan NEF 2 (Hz)</span><div class="input-area"><input type="text" name="op_mainfan_nef2" placeholder="(Hz)"></div></div>
+                <div class="field-row"><span class="label">Mainfan NEF 3 (Hz)</span><div class="input-area"><input type="text" name="op_mainfan_nef3" placeholder="(Hz)"></div></div>
+                <div class="field-row"><span class="label">Tipping Hall (NSF 1)</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_nsf1" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Dry Scrubber A</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_dry_a" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Dry Scrubber B</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_dry_b" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Dry Scrubber C</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_dry_c" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Compactor Hall (NSF 4)</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_nsf4" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">WWTP EEF 13</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_eef13" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">WWTP EEF 14 (standby)</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_eef14" value="Y" checked> Y (Standby)</label></div></div>
+                <div class="field-row"><span class="label">WWTP ESF 15</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf15" value="Y" checked> Y (OK)</label></div></div>
+                <div class="separator-light"></div><div class="separator-label">👥 STAFFING & SHIFT RECORDS</div>
+                <div class="field-row"><span class="label">⏰ Shift Start Time</span><div class="input-area"><input type="text" name="op_shift_start" placeholder="e.g. 07:30 / 0730"></div></div>
+                <div class="field-row"><span class="label">⏰ Shift End Time</span><div class="input-area"><input type="text" name="op_shift_end" placeholder="e.g. 19:30 / 1930"></div></div>
+                <div class="field-row"><span class="label">Supervisor</span><div class="input-area"><input type="text" name="op_supervisor" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Mobile plant operator</span><div class="input-area"><input type="text" name="op_mobile" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Station operator</span><div class="input-area"><input type="text" name="op_station" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Maintenance technician</span><div class="input-area"><input type="text" name="op_technician" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Semiskilled worker</span><div class="input-area"><input type="text" name="op_semiskilled" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">WWTP operator</span><div class="input-area"><input type="text" name="op_wwtp" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Labour</span><div class="input-area"><input type="text" name="op_labour" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Livefloor operator</span><div class="input-area"><input type="text" name="op_livefloor" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Weighbridge operator</span><div class="input-area"><input type="text" name="op_weighbridge" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">Livefloor and compactor 1</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_livefloor1" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Livefloor and compactor 2</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_livefloor2" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Livefloor and compactor 3</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_livefloor3" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Livefloor and compactor 4</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_livefloor4" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Diffusers in SBR tanks 1</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_sbr1" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Diffusers in SBR tanks 2</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_sbr2" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ERF 1</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_erf1" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ERF 2</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_erf2" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ERF 3</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_erf3" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ERF 4</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_erf4" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">EEF 5</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_eef5" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">EEF 6</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_eef6" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 7</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf7" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 8 (standby)</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf8" value="Y" checked> Y (Standby)</label></div></div>
+                <div class="field-row"><span class="label">ESF 9A</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf9a" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 9B</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf9b" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 10A</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf10a" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 10B</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf10b" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 11</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf11" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 12</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf12" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">ESF 16</span><div class="input-area"><label class="checkbox-inline"><input type="checkbox" name="op_esf16" value="Y" checked> Y (OK)</label></div></div>
+                <div class="field-row"><span class="label">Other (specify)</span><div class="input-area"><input type="text" name="op_other" placeholder="(Other equipment)"></div></div>
+                <div class="field-row"><span class="label">Notes</span><div class="input-area"><textarea rows="2" name="op_notes" placeholder="(Additional notes...)"></textarea></div></div>
+                <div class="field-row"><span class="label">Checked By</span><div class="input-area"><input type="text" name="op_checked_by" placeholder="(Name / ID)"></div></div>
+                <div class="field-row"><span class="label">Total no.of RCV were inspected</span><div class="input-area"><input type="text" name="op_rcv_total" placeholder="(Number)"></div></div>
+                <div class="field-row"><span class="label">With plate no.</span><div class="input-area"><input type="text" name="op_rcv_plates" placeholder="(Plate numbers)"></div></div>
+            </div>
+        </div>
+        <div style="margin: 20px;"><button type="button" id="part2Btn" class="btn-part2">📋 PART II - OPERATIONAL & ENVIRONMENTAL PERFORMANCE</button></div>
+        <div id="part2Panel" class="part2-panel"><div class="part2-header">📋 PART II - OPERATIONAL & ENVIRONMENTAL PERFORMANCE</div>
+            <!-- PART II 内容与之前相同，略写但保留所有字段以保证导出完整性，为简洁此处省略内文但实际已全部包含 -->
+            <div class="part2-subsection"><div class="sub-header">1. Weighbridge Operation</div><div class="field-row"><span class="label">Checked by</span><div class="input-area"><input type="text" name="p2_wb_checked" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Does the daily waste transaction record being checked according to WI_IWTS_001?</span><div class="input-area"><select name="p2_wb_transaction"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_wb_time" placeholder="(e.g. 1548 -> 15:48)"></div></div><div class="field-row"><span class="label">Overall system operated in normal condition</span><div class="input-area"><select name="p2_wb_normal"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_wb_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">2. Vehicle Turnaround Time/Queuing</div><div class="field-row"><span class="label">Vehicle Turnaround Time within contract requirement</span><div class="input-area"><select name="p2_tt_time"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Queuing off-site observed</span><div class="input-area"><select name="p2_tt_queuing"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_tt_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">3. Waste Classification and Inspection</div><div class="field-row"><span class="label">Inspected by</span><div class="input-area"><input type="text" name="p2_waste_inspected" placeholder="I(TD) / CHEC"></div></div><div class="field-row"><span class="label">Vehicle No.</span><div class="input-area"><input type="text" name="p2_waste_vehicle" placeholder="(Vehicle No.)"></div></div><div class="field-row"><span class="label">Time / Location</span><div class="input-area"><input type="text" name="p2_waste_time_loc" placeholder="Time / Tipping Hall"></div></div><div class="field-row"><span class="label">Permitted Waste (Y / N)</span><div class="input-area"><select name="p2_waste_permitted"><option value="">Select</option><option value="Y">Y</option><option value="N">N</option></select></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">4. Waste Tipping and compaction</div><div class="field-row"><span class="label">Inspected by</span><div class="input-area"><input type="text" name="p2_tip_inspected" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Does the waste being handling properly</span><div class="input-area"><select name="p2_tip_handling"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Time / Location</span><div class="input-area"><input type="text" name="p2_tip_time_loc" placeholder="Time / Location"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_tip_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">5. Spillage/Leakage of Leachate</div><div class="field-row"><span class="label">Recorded by</span><div class="input-area"><input type="text" name="p2_leak_recorded" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Time / Location</span><div class="input-area"><input type="text" name="p2_leak_time_loc" placeholder="Time / Location"></div></div><div class="field-row"><span class="label">Caused by</span><div class="input-area"><input type="text" name="p2_leak_caused" placeholder="(Cause)"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_leak_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">6. Vehicle Washing Facilities</div><div class="field-row"><span class="label">Inspected by</span><div class="input-area"><input type="text" name="p2_wash_inspected" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Does the WCV being properly cleaned by vehicle washing plant</span><div class="input-area"><select name="p2_wash_cleaned"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_wash_time" placeholder="(Time)"></div></div><div class="field-row"><span class="label">Vehicle No.</span><div class="input-area"><input type="text" name="p2_wash_vehicle" placeholder="(Vehicle No.)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">7. On-site Machinery Checked</div><div class="field-row"><span class="label">Inspected by</span><div class="input-area"><input type="text" name="p2_machinery_inspected" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Time / Location</span><div class="input-area"><input type="text" name="p2_machinery_time_loc" placeholder="Time / Location"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_machinery_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">8. Off-Site Litter Control</div><div class="field-row"><span class="label">Inspected by</span><div class="input-area"><input type="text" name="p2_litter_inspected" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Time / Location</span><div class="input-area"><input type="text" name="p2_litter_time_loc" placeholder="Time / Location"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_litter_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">9. TSP / RSP / CO / NOx / Radon / VOC Monitoring</div><div class="field-row"><span class="label">Conducted by</span><div class="input-area"><input type="text" name="p2_air_conducted" placeholder="Aurecon"></div></div><div class="field-row"><span class="label">Sampling from</span><div class="input-area"><select name="p2_air_sampling"><option value="">Select</option><option value="Tipping Hall">Tipping Hall</option><option value="Site Boundary">Site Boundary</option></select></div></div><div class="field-row"><span class="label">Witnessed by</span><div class="input-area"><input type="text" name="p2_air_witnessed" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_air_time" placeholder="(Time)"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_air_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">10. Noise Monitoring</div><div class="field-row"><span class="label">Conducted by</span><div class="input-area"><input type="text" name="p2_noise_conducted" placeholder="Aurecon / EPD"></div></div><div class="field-row"><span class="label">Measuring Point</span><div class="input-area"><input type="text" name="p2_noise_point" placeholder="(Measuring Point)"></div></div><div class="field-row"><span class="label">Witnessed by</span><div class="input-area"><input type="text" name="p2_noise_witnessed" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Sound Level Meter Calibration</span><div class="input-area"><select name="p2_noise_calibration"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_noise_time" placeholder="(Time)"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_noise_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">11. Water Sampling</div><div class="field-row"><span class="label">Conducted by</span><div class="input-area"><input type="text" name="p2_water_conducted" placeholder="Aurecon / EPD"></div></div><div class="field-row"><span class="label">Does the sampling guidelines being followed?</span><div class="input-area"><select name="p2_water_guidelines"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div><div class="field-row"><span class="label">Witnessed by</span><div class="input-area"><input type="text" name="p2_water_witnessed" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Sampling Point</span><div class="input-area"><input type="text" name="p2_water_point" placeholder="(Sampling Point)"></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_water_time" placeholder="(Time)"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_water_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">12. Dewatered Sludge Sampling</div><div class="field-row"><span class="label">Conducted by</span><div class="input-area"><input type="text" name="p2_sludge_conducted" placeholder="Aurecon / EPD"></div></div><div class="field-row"><span class="label">Witnessed by</span><div class="input-area"><input type="text" name="p2_sludge_witnessed" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_sludge_time" placeholder="(Time)"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_sludge_remark" placeholder="(Remark)"></div></div></div>
+            <div class="part2-subsection"><div class="sub-header">13. Pest / Mosquito Control</div><div class="field-row"><span class="label">Conducted by</span><div class="input-area"><input type="text" name="p2_pest_conducted" placeholder="CHEC"></div></div><div class="field-row"><span class="label">Witnessed by</span><div class="input-area"><input type="text" name="p2_pest_witnessed" placeholder="I(TD)"></div></div><div class="field-row"><span class="label">Time</span><div class="input-area"><input type="text" name="p2_pest_time" placeholder="(Time)"></div></div><div class="field-row"><span class="label">Remark</span><div class="input-area"><input type="text" name="p2_pest_remark" placeholder="(Remark)"></div></div></div>
+        </div>
         <button type="button" id="exportBtn" class="btn-export">📎 EXPORT TO EXCEL (.XLSX)</button>
-        <div class="legend"><p>✅ Based on DOIF-IWTS-001 & 002 (ver.4) | Complete Inspection Form</p><p>💾 Auto-save on every input</p><p>🔧 Smart ID: type "i21" → "I(TD)21" | "si41" → "SI(TD)41"</p><p>⏰ Smart Time: "1548" → "15:48"</p></div>
+        <div class="legend"><p>✅ Based on DOIF-IWTS-001 & 002 (ver.4) | Complete Inspection Form</p><p>💾 Auto-save on every input (data persists even if browser closes)</p><p>🔧 Smart ID: type "i21" → "I(TD)21" | "si41" → "SI(TD)41"</p><p>⏰ Smart Time: "1548" → "15:48" | "15481549" → "15:48 - 15:49"</p><p>📋 Excel export includes multi-level map headers (section grouping)</p></div>
     </form>
 </div>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script>
-// ============ 所有 JavaScript 函數與之前相同 ============
-// PART II 面板切換
+// ============ PART II 面板切換功能 ============
 const part2Btn = document.getElementById('part2Btn');
 const part2Panel = document.getElementById('part2Panel');
 let part2Visible = false;
-if (part2Btn) {
-    part2Btn.addEventListener('click', () => {
-        part2Visible = !part2Visible;
-        if (part2Visible) {
-            part2Panel.classList.add('show');
-            part2Btn.textContent = '📋 PART II - HIDE ▲';
-            part2Btn.classList.add('active');
-        } else {
-            part2Panel.classList.remove('show');
-            part2Btn.textContent = '📋 PART II - OPERATIONAL & ENVIRONMENTAL PERFORMANCE';
-            part2Btn.classList.remove('active');
-        }
-    });
-}
 
-// SMART TIME FORMATTING
+part2Btn.addEventListener('click', () => {
+    part2Visible = !part2Visible;
+    if (part2Visible) {
+        part2Panel.classList.add('show');
+        part2Btn.textContent = '📋 PART II - HIDE ▲';
+        part2Btn.classList.add('active');
+    } else {
+        part2Panel.classList.remove('show');
+        part2Btn.textContent = '📋 PART II - OPERATIONAL & ENVIRONMENTAL PERFORMANCE';
+        part2Btn.classList.remove('active');
+    }
+});
+
+// ============ SMART TIME FORMATTING ============
 function formatTime(input) {
     if (!input) return input;
     let str = input.toString().trim();
@@ -143,50 +312,149 @@ function formatTime(input) {
     if (/^\d{8}$/.test(str)) return str.substring(0,2) + ":" + str.substring(2,4) + " - " + str.substring(4,6) + ":" + str.substring(6,8);
     return str;
 }
+
 function formatTimeOnBlur(el) { if (el.value) el.value = formatTime(el.value); }
+
 document.querySelectorAll('input[type="text"]').forEach(el => {
     const ph = el.placeholder || '';
     const nm = el.name || '';
-    if (ph.includes("1548") || nm.includes('_time') || nm.includes('_start') || nm.includes('_end') || el.id === 'inspectTime') {
+    if (ph.includes("1548") || nm.includes('_time') || nm.includes('_start') || nm.includes('_end') || el.id === 'inspectTime' || ph.includes('07:30')) {
         el.addEventListener('blur', () => formatTimeOnBlur(el));
     }
 });
 
-// SMART ID CONVERSION
+// ============ SMART ID CONVERSION (修正版 - 确保 (TD) 大写) ============
 function smartIdFormat(val) {
     if (!val || !val.trim()) return val;
     let v = val.trim().toUpperCase();
+    
+    // 已经是正确格式: I(TD)21 或 SI(TD)41 或 E(TD)21 或 W(TD)21
     if (/^[A-Z]{1,2}\(TD\)\d+$/.test(v)) return v;
+    
+    // 处理小写的 (td) 情况
     let cleaned = val.trim().toUpperCase().replace(/\(TD\)/i, '(TD)');
     if (/^[A-Z]{1,2}\(TD\)\d+$/.test(cleaned)) return cleaned;
-    if (/^[A-Z]\d+$/.test(v)) return v.substring(0,1) + '(TD)' + v.substring(1);
-    if (/^[A-Z]{2}\d+$/.test(v)) return v.substring(0,2) + '(TD)' + v.substring(2);
-    if (/^\d+$/.test(v)) return `I(TD)${v}`;
+    
+    // 单字母 + 数字: e21, i21, s21, w21 -> E(TD)21, I(TD)21, S(TD)21, W(TD)21
+    if (/^[A-Z]\d+$/.test(v)) {
+        let letter = v.substring(0, 1);
+        let number = v.substring(1);
+        return `${letter}(TD)${number}`;
+    }
+    
+    // 双字母 + 数字: si21, ch21, wk21 -> SI(TD)21, CH(TD)21, WK(TD)21
+    if (/^[A-Z]{2}\d+$/.test(v)) {
+        let letters = v.substring(0, 2);
+        let number = v.substring(2);
+        return `${letters}(TD)${number}`;
+    }
+    
+    // 只有数字: 21 -> I(TD)21（默认用I）
+    if (/^\d+$/.test(v)) {
+        return `I(TD)${v}`;
+    }
+    
+    // 包含数字的其他格式：提取数字和前面的字母
     let m = v.match(/^([A-Z]{1,2})?(\d+)$/);
-    if (m) return (m[1] || 'I') + '(TD)' + m[2];
-    return v;
+    if (m) {
+        let prefix = m[1] || 'I';
+        let number = m[2];
+        return `${prefix}(TD)${number}`;
+    }
+    
+    // 无法识别的格式，原样返回并转大写
+    return v.toUpperCase();
 }
+
+// 防止重复转换的标志
 let isSmartIdConverting = false;
-function applySmartId(el) {
+
+function applySmartId(el) { 
     if (el.value && el.value.trim() && !isSmartIdConverting) {
         isSmartIdConverting = true;
-        let converted = smartIdFormat(el.value);
-        if (converted !== el.value) el.value = converted;
+        let originalValue = el.value;
+        let converted = smartIdFormat(originalValue);
+        if (converted !== originalValue) {
+            el.value = converted;
+        }
         isSmartIdConverting = false;
     }
 }
+
 const inspectedBy = document.getElementById('inspectedBy');
 inspectedBy.addEventListener('blur', () => applySmartId(inspectedBy));
+
+// ============ 对所有人员相关字段应用 Smart ID (包括 Checked By) ============
+// 方法1: 通过 name 属性选择
 document.querySelectorAll('input[type="text"]').forEach(el => {
     const name = el.name || '';
+    const id = el.id || '';
     const placeholder = el.placeholder || '';
-    if (name.includes('checked') || name.includes('inspected') || name.includes('witnessed') || 
-        name.includes('recorded') || name.includes('_by') || placeholder.includes('I(TD)')) {
-        if (el.id !== 'inspectedBy') el.addEventListener('blur', () => applySmartId(el));
+    const className = el.className || '';
+    
+    // 扩展人员字段匹配条件 - 确保包含 op_checked_by
+    if (name.includes('supervisor') || name.includes('operator') || name.includes('technician') || 
+        name.includes('worker') || name.includes('labour') || name.includes('inspected') || 
+        name.includes('witnessed') || name.includes('recorded') || name.includes('checked') ||
+        name.includes('_by') || name === 'op_checked_by' ||
+        id === 'inspectedBy' || id === 'op_checked_by' ||
+        placeholder.includes('I(TD)') || placeholder.includes('Name / ID') ||
+        placeholder.includes('Checked By')) {
+        
+        if (el.id !== 'inspectedBy') {
+            console.log('Adding Smart ID to:', name || id);  // 调试用，可删除
+            el.addEventListener('blur', () => applySmartId(el));
+        }
     }
 });
 
-// COLLECT FORM DATA
+// 方法2: 直接确保 op_checked_by 字段
+const checkedByField = document.querySelector('input[name="op_checked_by"]');
+if (checkedByField) {
+    checkedByField.addEventListener('blur', () => applySmartId(checkedByField));
+}
+
+// ============ CAPITALIZATION (修正版 - 支持 (td) -> (TD)) ============
+function smartCapitalize(str) {
+    if (!str) return str;
+    
+    // 先特殊处理 (td) 转换为 (TD)
+    let processed = str.replace(/\(td\)/gi, '(TD)');
+    
+    const keepUpper = ['CCTV', 'ID', 'RCV', 'CPU', 'TD', 'SI', 'I', 'E', 'W', 'SBR', 'WWTP', 'JCB', 'CHU', 'NA', 'TSP', 'RSP', 'CO', 'NOX', 'VOC', 'CHEC', 'EPD', 'WSG', 'NEF', 'NSF', 'EEF', 'ESF', 'ERF', 'SEPI', 'EPO'];
+    let words = processed.split(' ');
+    let result = words.map(word => {
+        let upperWord = word.toUpperCase();
+        if (keepUpper.includes(upperWord)) return upperWord;
+        if (word.length > 0) return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        return word;
+    });
+    return result.join(' ');
+}
+
+// 应用大写转换，但跳过已经是正确 ID 格式的字段
+document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+    // 跳过 inspectedBy 字段、时间字段、已经是正确ID格式的字段、以及人员字段（避免与Smart ID冲突）
+    const isPersonField = (el.name || '').includes('checked') || (el.name || '').includes('inspected') ||
+                          (el.name || '').includes('witnessed') || (el.name || '').includes('recorded') ||
+                          (el.name || '').includes('supervisor') || (el.name || '').includes('operator') ||
+                          (el.name || '').includes('technician') || (el.name || '').includes('labour') ||
+                          (el.name || '').includes('_by') || el.id === 'inspectedBy';
+    
+    if (!isPersonField && 
+        el.id !== 'inspectedBy' && 
+        !el.placeholder?.includes("1548") && 
+        !el.placeholder?.includes("I(TD)") &&
+        !el.value?.match(/^[A-Z]{1,2}\(TD\)\d+$/)) {
+        el.addEventListener('blur', function() { 
+            if (this.value && !isSmartIdConverting) {
+                this.value = smartCapitalize(this.value);
+            }
+        });
+    }
+});
+
+// ============ COLLECT FORM DATA ============
 function collectFormData() {
     const form = document.getElementById('inspectionForm');
     const elements = form.elements;
@@ -194,8 +462,13 @@ function collectFormData() {
     for (let i = 0; i < elements.length; i++) {
         const el = elements[i];
         if (el.name) {
+            // 对于复选框，需要特殊处理：如果未选中，值为空
             if (el.type === 'checkbox') {
-                if (el.checked) data[el.name] = el.value;
+                if (el.checked) {
+                    data[el.name] = el.value;
+                } else {
+                    data[el.name] = '';
+                }
             } else {
                 data[el.name] = el.value;
             }
@@ -204,7 +477,7 @@ function collectFormData() {
     return data;
 }
 
-// EXPORT TO EXCEL
+// ============ EXPORT TO EXCEL ============
 function exportToExcel() {
     const date = document.getElementById('inspectDate').value;
     const formTime = document.getElementById('inspectTime').value;
@@ -221,25 +494,115 @@ function exportToExcel() {
         ...collectFormData()
     };
     
-    const headers = Object.keys(flat);
-    const rowData = headers.map(h => flat[h]);
-    const wsData = [headers, rowData];
+    // 定义字段映射表: 每个section标题 + 其下字段分组
+    const sectionMap = [
+        { title: "📋 HEADER & META", fields: ["inspection_date","inspection_time","inspected_by","weather_am","weather_pm"] },
+        { title: "1. WEIGHBRIDGE AREA", fields: ["wb_clean","wb_traffic","wb_display_in","wb_display_out","wb_computer","wb_operator","wb_cctv"] },
+        { title: "2. RCV ACCESS", fields: ["rcv_channel","rcv_clean","rcv_traffic","rcv_air_curtain"] },
+        { title: "3. VEHICLE WASHING PLANT", fields: ["wash_spray","wash_dropbar"] },
+        { title: "4. TIPPING HALL", fields: ["th_traffic","th_clean_light","th_traffic_light","th_spray_dust","th_ventilation","th_wheel_stopper","th_heat_detection","th_odour_suppress"] },
+        { title: "5. CONTROL ROOM", fields: ["cr_operator","cr_odour","cr_ac_light"] },
+        { title: "6. WET SCRUBBERING SYSTEM", fields: ["ws_unit","ws_clean","ws_odour","ws_circulation"] },
+        { title: "7. COMPACTOR HALL", fields: ["ch_clean","ch_odour","ch_light_traffic","ch_tractor"] },
+        { title: "8. WASTEWATER TREATMENT PLANT", fields: ["wwt_collection","wwt_effluent","wwt_sludge","wwt_sbr","wwt_filterpress"] },
+        { title: "9. CONTAINER ACCESS", fields: ["ca_clean","ca_light_odour","ca_air_curtain"] },
+        { title: "10. BERTH AREA", fields: ["ba_vessel","ba_clean","ba_traffic","ba_stockpile","ba_chu"] },
+        { title: "11. SPIRAL RAMP", fields: ["sr_clean","sr_traffic","sr_auto_clean"] },
+        { title: "12. OTHERS", fields: ["ot_roadsweeper_streets","ot_roadsweeper_site","ot_odour_monitor"] },
+        { title: "13. OPERATIONAL STATUS & EQUIPMENT", fields: ["op_non_op_hours","op_vent_fans","op_mainfan_nef2","op_mainfan_nef3","op_nsf1","op_dry_a","op_dry_b","op_dry_c","op_nsf4","op_eef13","op_eef14","op_esf15","op_shift_start","op_shift_end","op_supervisor","op_mobile","op_station","op_technician","op_semiskilled","op_wwtp","op_labour","op_livefloor","op_weighbridge","op_livefloor1","op_livefloor2","op_livefloor3","op_livefloor4","op_sbr1","op_sbr2","op_erf1","op_erf2","op_erf3","op_erf4","op_eef5","op_eef6","op_esf7","op_esf8","op_esf9a","op_esf9b","op_esf10a","op_esf10b","op_esf11","op_esf12","op_esf16","op_other","op_notes","op_checked_by","op_rcv_total","op_rcv_plates"] },
+        { title: "PART II - OPERATIONAL & ENVIRONMENTAL", fields: Object.keys(flat).filter(k => k.startsWith("p2_")) }
+    ];
+    
+    // 构建多级表头: 第一行section名, 第二行具体字段名
+    const maxCols = Object.keys(flat).length;
+    let headerRow1 = new Array(maxCols).fill("");
+    let headerRow2 = new Array(maxCols).fill("");
+    let colIndex = 0;
+    for(let group of sectionMap) {
+        for(let field of group.fields) {
+            if(flat.hasOwnProperty(field)) {
+                headerRow1[colIndex] = group.title;
+                headerRow2[colIndex] = field;
+                colIndex++;
+            }
+        }
+    }
+    
+    // 数据行
+    const dataRow = Object.keys(flat).map(key => flat[key]);
+    
+    // 构建工作表
+    const wsData = [headerRow1, headerRow2, dataRow];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
+    ws['!merges'] = [];
+    
+    // 合并相同section的单元格
+    let mergeStart = 0;
+    for(let i=0; i<headerRow1.length; i++) {
+        if(i===0 || headerRow1[i]!==headerRow1[i-1]) {
+            if(mergeStart < i) ws['!merges'].push({s:{r:0,c:mergeStart},e:{r:0,c:i-1}});
+            mergeStart = i;
+        }
+    }
+    if(mergeStart < headerRow1.length) ws['!merges'].push({s:{r:0,c:mergeStart},e:{r:0,c:headerRow1.length-1}});
+    
+    ws['!cols'] = [{wch:25},{wch:20},{wch:18},{wch:18},{wch:18},{wch:18},{wch:18},{wch:18},{wch:18},{wch:18},{wch:18},{wch:18}];
+    
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, `IWTS_${date}`);
     XLSX.writeFile(wb, `IWTS_Inspection_${date}_${inspected}.xlsx`);
-    alert(`✅ 匯出成功！\n日期: ${date}\n檢查人員: ${inspected}`);
     
-    // 清空表單
-    document.querySelectorAll('input[type="text"], textarea').forEach(el => { el.value = ''; });
-    document.getElementById('inspectDate').value = new Date().toISOString().split('T')[0];
-    document.getElementById('inspectTime').value = '';
-    document.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
-    localStorage.removeItem('IWTS_CURRENT_DRAFT_V5');
+    alert(`✅ 匯出成功！多级表头已包括章节分组。\n日期: ${date}\n檢查人員: ${inspected}`);
+    
+    // 导出成功后自动清空表单
+    clearFormAfterExport();
 }
 
-// AUTO-SAVE DRAFT
+// ============ 导出后清空表单（保留默认值） ============
+function clearFormAfterExport() {
+    // 清空文本输入框
+    document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+        el.value = '';
+    });
+    
+    // 日期字段设为今天
+    document.getElementById('inspectDate').value = new Date().toISOString().split('T')[0];
+    
+    // 清空时间字段
+    document.getElementById('inspectTime').value = '';
+    
+    // 清空所有下拉选择框
+    document.querySelectorAll('select').forEach(el => {
+        el.selectedIndex = 0;
+    });
+    
+    // 重置复选框（设备状态默认为正常/已勾选）
+    document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+        if (el.name && (el.name.includes('op_') || el.name.includes('_livefloor') || 
+            el.name.includes('_dry_') || el.name.includes('_nsf') || 
+            el.name.includes('_eef') || el.name.includes('_esf') || 
+            el.name.includes('_erf') || el.name.includes('_sbr'))) {
+            el.checked = true;
+        } else {
+            el.checked = false;
+        }
+    });
+    
+    // 清空本地草稿
+    localStorage.removeItem('IWTS_CURRENT_DRAFT_V5');
+    
+    // 显示提示
+    const badge = document.getElementById('autoSaveBadge');
+    const originalText = badge.innerHTML;
+    badge.innerHTML = '✅ Exported & Cleared';
+    setTimeout(() => {
+        badge.innerHTML = originalText;
+    }, 2000);
+}
+
+// ============ AUTO-SAVE DRAFT ============
 const DRAFT_KEY = 'IWTS_CURRENT_DRAFT_V5';
+
 function saveDraft() {
     const draft = {
         date: document.getElementById('inspectDate').value,
@@ -256,6 +619,7 @@ function saveDraft() {
     badge.innerHTML = '💾 Draft saved';
     setTimeout(() => badge.innerHTML = '💾 Auto-saved', 1500);
 }
+
 function restoreDraft() {
     const raw = localStorage.getItem(DRAFT_KEY);
     if (!raw) return;
@@ -266,7 +630,7 @@ function restoreDraft() {
         if (d.weatherAM) document.getElementById('weatherAM').value = d.weatherAM;
         if (d.weatherPM) document.getElementById('weatherPM').value = d.weatherPM;
         if (d.inspected) document.getElementById('inspectedBy').value = d.inspected;
-        if (d.part2Visible && part2Btn && part2Panel) {
+        if (d.part2Visible) {
             part2Visible = true;
             part2Panel.classList.add('show');
             part2Btn.textContent = '📋 PART II - HIDE ▲';
@@ -276,33 +640,39 @@ function restoreDraft() {
             for (const [name, value] of Object.entries(d.form)) {
                 const el = document.querySelector(`[name="${name}"]`);
                 if (el) {
-                    if (el.type === 'checkbox') el.checked = (value === 'Y');
-                    else el.value = value;
+                    if (el.type === 'checkbox') {
+                        el.checked = (value === 'Y');
+                    } else {
+                        el.value = value;
+                    }
                 }
             }
         }
     } catch(e) {}
 }
+
 let draftTimer;
 function autoSaveHandler() { clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 500); }
+
 document.querySelectorAll('input, select, textarea').forEach(el => {
     el.addEventListener('input', autoSaveHandler);
     el.addEventListener('change', autoSaveHandler);
 });
+
 const today = new Date().toISOString().split('T')[0];
 if (!document.getElementById('inspectDate').value) document.getElementById('inspectDate').value = today;
+
 restoreDraft();
 document.getElementById('exportBtn').addEventListener('click', exportToExcel);
 
-// 折疊功能
+// 折叠功能
 document.querySelectorAll('.section-title').forEach(title => {
     title.addEventListener('click', () => {
         const sectionId = title.getAttribute('data-section');
         const content = document.getElementById(sectionId);
         if (content) {
             content.classList.toggle('collapsed');
-            const icon = title.querySelector('.toggle-icon');
-            if (icon) icon.innerHTML = content.classList.contains('collapsed') ? '▶' : '▼';
+            title.querySelector('.toggle-icon').innerHTML = content.classList.contains('collapsed') ? '▶' : '▼';
         }
     });
 });
