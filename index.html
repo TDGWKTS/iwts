@@ -488,8 +488,24 @@ function exportToExcel() {
     const date = document.getElementById('inspectDate').value;
     const formTime = document.getElementById('inspectTime').value;
     const inspected = document.getElementById('inspectedBy').value.trim();
+    
     if (!inspected) { alert('請填寫檢查人員姓名或編號 (Inspected By)'); inspectedBy.focus(); return; }
     if (!date) { alert('請選擇巡查日期'); return; }
+    
+    // 直接從表單收集所有數據
+    const form = document.getElementById('inspectionForm');
+    const elements = form.elements;
+    const formData = {};
+    for (let i = 0; i < elements.length; i++) {
+        const el = elements[i];
+        if (el.name) {
+            if (el.type === 'checkbox') {
+                if (el.checked) formData[el.name] = el.value;
+            } else {
+                formData[el.name] = el.value;
+            }
+        }
+    }
     
     const flat = {
         inspection_date: date,
@@ -497,35 +513,89 @@ function exportToExcel() {
         inspected_by: inspected,
         weather_am: document.getElementById('weatherAM').value,
         weather_pm: document.getElementById('weatherPM').value,
-        ...collectFormData()
+        ...formData
     };
     
-    const headers = Object.keys(flat);
-    const rowData = headers.map(h => flat[h]);
-    const wsData = [headers, rowData];
+    // ========== 定義多級表頭的區塊分組 ==========
+    const sectionGroups = [
+        { title: "📋 HEADER & META", fields: ["inspection_date", "inspection_time", "inspected_by", "weather_am", "weather_pm"] },
+        { title: "1. WEIGHBRIDGE AREA", fields: ["wb_clean", "wb_traffic", "wb_display_in", "wb_display_out", "wb_computer", "wb_operator", "wb_cctv"] },
+        { title: "2. RCV ACCESS", fields: ["rcv_channel", "rcv_clean", "rcv_traffic", "rcv_air_curtain"] },
+        { title: "3. VEHICLE WASHING PLANT", fields: ["wash_spray", "wash_dropbar"] },
+        { title: "4. TIPPING HALL", fields: ["th_traffic", "th_clean_light", "th_traffic_light", "th_spray_dust", "th_ventilation", "th_wheel_stopper", "th_heat_detection", "th_odour_suppress"] },
+        { title: "5. CONTROL ROOM", fields: ["cr_operator", "cr_odour", "cr_ac_light"] },
+        { title: "6. WET SCRUBBERING SYSTEM", fields: ["ws_unit", "ws_clean", "ws_odour", "ws_circulation"] },
+        { title: "7. COMPACTOR HALL", fields: ["ch_clean", "ch_odour", "ch_light_traffic", "ch_tractor"] },
+        { title: "8. WASTEWATER TREATMENT PLANT", fields: ["wwt_collection", "wwt_rundown", "wwt_effluent", "wwt_sludge", "wwt_sbr", "wwt_sbr_onoff", "wwt_recirc_pump", "wwt_filterpress"] },
+        { title: "9. CONTAINER ACCESS", fields: ["ca_clean", "ca_light_odour", "ca_air_curtain"] },
+        { title: "10. BERTH AREA", fields: ["ba_vessel", "ba_clean", "ba_traffic", "ba_stockpile", "ba_chu"] },
+        { title: "11. SPIRAL RAMP", fields: ["sr_clean", "sr_traffic", "sr_auto_clean"] },
+        { title: "12. OTHERS", fields: ["ot_roadsweeper_streets", "ot_roadsweeper_site", "ot_odour_monitor"] },
+        { title: "13. OPERATIONAL STATUS", fields: Object.keys(flat).filter(k => k.startsWith("op_") && k !== "op_wwtp") },
+        { title: "📋 PART II", fields: Object.keys(flat).filter(k => k.startsWith("p2_")) }
+    ];
+    
+    // 按照 sectionGroups 的順序建立表頭
+    const allFields = [];
+    for (const group of sectionGroups) {
+        for (const field of group.fields) {
+            if (flat.hasOwnProperty(field)) {
+                allFields.push(field);
+            }
+        }
+    }
+    // 添加任何遺漏的欄位
+    for (const key of Object.keys(flat)) {
+        if (!allFields.includes(key)) {
+            allFields.push(key);
+        }
+    }
+    
+    // 建立第一行（區塊標題）和第二行（欄位名稱）
+    const headerRow1 = [];
+    const headerRow2 = [];
+    for (const field of allFields) {
+        let foundTitle = "⚙️ OTHER";
+        for (const group of sectionGroups) {
+            if (group.fields.includes(field)) {
+                foundTitle = group.title;
+                break;
+            }
+        }
+        headerRow1.push(foundTitle);
+        headerRow2.push(field);
+    }
+    
+    // 數據行
+    const dataRow = allFields.map(field => flat[field]);
+    
+    // 創建工作表
+    const wsData = [headerRow1, headerRow2, dataRow];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
+    
+    // 合併相同區塊的儲存格（第一行）
+    ws['!merges'] = [];
+    let mergeStart = 0;
+    for (let i = 1; i < headerRow1.length; i++) {
+        if (headerRow1[i] !== headerRow1[i-1]) {
+            if (mergeStart < i) {
+                ws['!merges'].push({ s: { r: 0, c: mergeStart }, e: { r: 0, c: i-1 } });
+            }
+            mergeStart = i;
+        }
+    }
+    if (mergeStart < headerRow1.length) {
+        ws['!merges'].push({ s: { r: 0, c: mergeStart }, e: { r: 0, c: headerRow1.length-1 } });
+    }
+    
+    // 設定列寬
+    ws['!cols'] = [{ wch: 22 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
+    
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, `IWTS_${date}`);
     XLSX.writeFile(wb, `IWTS_Inspection_${date}_${inspected}.xlsx`);
-    alert(`✅ 匯出成功！\n日期: ${date}\n檢查人員: ${inspected}`);
     
-    // 匯出後清空表單（保留默認值）
-    document.querySelectorAll('input[type="text"], textarea').forEach(el => { el.value = ''; });
-    document.getElementById('inspectDate').value = new Date().toISOString().split('T')[0];
-    document.getElementById('inspectTime').value = '';
-    document.getElementById('inspectedBy').value = '';
-    document.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
-    document.querySelectorAll('input[type="checkbox"]').forEach(el => {
-        if (el.name && (el.name.includes('op_') || el.name.includes('_livefloor') || 
-            el.name.includes('_dry_') || el.name.includes('_nsf') || 
-            el.name.includes('_eef') || el.name.includes('_esf') || 
-            el.name.includes('_erf') || el.name.includes('_sbr'))) {
-            el.checked = true;
-        } else {
-            el.checked = false;
-        }
-    });
-    localStorage.removeItem('IWTS_CURRENT_DRAFT_V5');
+    alert(`✅ 匯出成功！\n日期: ${date}\n檢查人員: ${inspected}\n總欄位數: ${allFields.length}\n表頭包含 📋 HEADER & META 區塊`);
 }
 
 // ============ AUTO-SAVE DRAFT ============
