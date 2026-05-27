@@ -516,7 +516,7 @@ function exportToExcel() {
         ...formData
     };
     
-    // ========== 定義多級表頭的區塊分組 ==========
+    // ========== 定義多級表頭的區塊分組（按照出現順序） ==========
     const sectionGroups = [
         { title: "📋 HEADER & META", fields: ["inspection_date", "inspection_time", "inspected_by", "weather_am", "weather_pm"] },
         { title: "1. WEIGHBRIDGE AREA", fields: ["wb_clean", "wb_traffic", "wb_display_in", "wb_display_out", "wb_computer", "wb_operator", "wb_cctv"] },
@@ -531,62 +531,73 @@ function exportToExcel() {
         { title: "10. BERTH AREA", fields: ["ba_vessel", "ba_clean", "ba_traffic", "ba_stockpile", "ba_chu"] },
         { title: "11. SPIRAL RAMP", fields: ["sr_clean", "sr_traffic", "sr_auto_clean"] },
         { title: "12. OTHERS", fields: ["ot_roadsweeper_streets", "ot_roadsweeper_site", "ot_odour_monitor"] },
-        { title: "13. OPERATIONAL STATUS", fields: Object.keys(flat).filter(k => k.startsWith("op_") && k !== "op_wwtp") },
-        { title: "📋 PART II", fields: Object.keys(flat).filter(k => k.startsWith("p2_")) }
+        { title: "13. OPERATIONAL STATUS", fields: Object.keys(flat).filter(k => k.startsWith("op_") && k !== "op_wwtp").sort() },
+        { title: "📋 PART II", fields: Object.keys(flat).filter(k => k.startsWith("p2_")).sort() }
     ];
     
-    // 按照 sectionGroups 的順序建立表頭
-    const allFields = [];
+    // 建立欄位順序（確保 op_wwtp 不在最後，且每個欄位只出現一次）
+    const orderedFields = [];
+    const usedFields = new Set();
+    
     for (const group of sectionGroups) {
         for (const field of group.fields) {
-            if (flat.hasOwnProperty(field)) {
-                allFields.push(field);
+            if (flat.hasOwnProperty(field) && !usedFields.has(field)) {
+                orderedFields.push(field);
+                usedFields.add(field);
             }
         }
     }
-    // 添加任何遺漏的欄位
+    
+    // 添加任何遺漏的欄位（確保沒有遺漏）
     for (const key of Object.keys(flat)) {
-        if (!allFields.includes(key)) {
-            allFields.push(key);
+        if (!usedFields.has(key)) {
+            orderedFields.push(key);
+            usedFields.add(key);
         }
     }
     
     // 建立第一行（區塊標題）和第二行（欄位名稱）
     const headerRow1 = [];
     const headerRow2 = [];
-    for (const field of allFields) {
-        let foundTitle = "⚙️ OTHER";
+    let currentGroupTitle = "";
+    let groupStartIndex = 0;
+    const merges = [];
+    
+    for (let i = 0; i < orderedFields.length; i++) {
+        const field = orderedFields[i];
+        let groupTitle = "⚙️ OTHER";
         for (const group of sectionGroups) {
             if (group.fields.includes(field)) {
-                foundTitle = group.title;
+                groupTitle = group.title;
                 break;
             }
         }
-        headerRow1.push(foundTitle);
+        headerRow1.push(groupTitle);
         headerRow2.push(field);
+        
+        // 記錄合併範圍
+        if (groupTitle !== currentGroupTitle) {
+            if (currentGroupTitle !== "" && i - groupStartIndex > 1) {
+                merges.push({ s: { r: 0, c: groupStartIndex }, e: { r: 0, c: i - 1 } });
+            }
+            currentGroupTitle = groupTitle;
+            groupStartIndex = i;
+        }
+    }
+    // 最後一組的合併
+    if (orderedFields.length - groupStartIndex > 1) {
+        merges.push({ s: { r: 0, c: groupStartIndex }, e: { r: 0, c: orderedFields.length - 1 } });
     }
     
     // 數據行
-    const dataRow = allFields.map(field => flat[field]);
+    const dataRow = orderedFields.map(field => flat[field]);
     
     // 創建工作表
     const wsData = [headerRow1, headerRow2, dataRow];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
     
-    // 合併相同區塊的儲存格（第一行）
-    ws['!merges'] = [];
-    let mergeStart = 0;
-    for (let i = 1; i < headerRow1.length; i++) {
-        if (headerRow1[i] !== headerRow1[i-1]) {
-            if (mergeStart < i) {
-                ws['!merges'].push({ s: { r: 0, c: mergeStart }, e: { r: 0, c: i-1 } });
-            }
-            mergeStart = i;
-        }
-    }
-    if (mergeStart < headerRow1.length) {
-        ws['!merges'].push({ s: { r: 0, c: mergeStart }, e: { r: 0, c: headerRow1.length-1 } });
-    }
+    // 設置合併儲存格
+    ws['!merges'] = merges;
     
     // 設定列寬
     ws['!cols'] = [{ wch: 22 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
@@ -595,7 +606,7 @@ function exportToExcel() {
     XLSX.utils.book_append_sheet(wb, ws, `IWTS_${date}`);
     XLSX.writeFile(wb, `IWTS_Inspection_${date}_${inspected}.xlsx`);
     
-    alert(`✅ 匯出成功！\n日期: ${date}\n檢查人員: ${inspected}\n總欄位數: ${allFields.length}\n表頭包含 📋 HEADER & META 區塊`);
+    alert(`✅ 匯出成功！\n日期: ${date}\n檢查人員: ${inspected}\n總欄位數: ${orderedFields.length}`);
 }
 
 // ============ AUTO-SAVE DRAFT ============
