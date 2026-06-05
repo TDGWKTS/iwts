@@ -387,6 +387,22 @@ if (part2Btn) {
     });
 }
 
+// ============ 初始化完成后添加 PART II 字段的智能转换监听 ==========
+document.addEventListener('DOMContentLoaded', async () => {
+    // ... 原有初始化代码 ...
+    // 为 PART II 所有输入框添加智能转换
+    const part2Inputs = document.querySelectorAll('#part2Panel input, #part2Panel select');
+    part2Inputs.forEach(input => {
+        input.addEventListener('blur', () => {
+            applyPart2SmartConversion(input);
+        });
+        // 车辆号牌实时大写 (输入时即时转换)
+        if (input.name && (input.name.includes('vehicle') || input.name === 'p2_waste_vehicle' || input.name === 'p2_wash_vehicle')) {
+            input.addEventListener('input', () => capitalizeVehicleNumber(input));
+        }
+    });
+});
+    
 // ============ SMART TIME FORMATTING ============
 function formatTime(input) {
     if (!input) return input;
