@@ -581,9 +581,9 @@ html
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script>
 
-console.log('🚀 IWTS FORM v8.0 - FULLY FIXED');
+console.log('🚀 IWTS FORM v8.0 - MANUAL SYNC ONLY');
 
-// ==================== 常量定义 (移到底部之前) ====================
+// ==================== 常量定义 ====================
 const STATION_ID = 'iwts';
 const WORKER_URL = 'https://inspection-sync.tdgwkts.workers.dev';
 const DRAFT_KEY = 'IWTS_CURRENT_DRAFT_V4';
@@ -1038,8 +1038,7 @@ function showSyncStatus(message, isError = false) {
     setTimeout(() => { statusDiv.style.display = 'none'; }, 4000);
 }
 
-// ==================== EXPORT & SYNC ==================
-// ==================== EXPORT & SYNC (Manual only - no auto-sync) ==================
+// ==================== EXPORT & SYNC (MANUAL ONLY) ==================
 async function exportAndSync() {
     const date = document.getElementById('inspectDate')?.value;
     const inspected = document.getElementById('inspectedBy')?.value.trim();
@@ -1054,7 +1053,7 @@ async function exportAndSync() {
     try {
         const formData = collectFormDataForExport();
         
-        // Only save to main DB (browser storage)
+        // Save to main DB (browser storage only)
         await saveToMainDB(formData);
         
         // Save to sync DB temporarily for R2 upload
@@ -1122,7 +1121,8 @@ async function exportAndSync() {
         showSyncStatus(`❌ Failed: ${error.message}`, true);
     }
 }
-// ==================== 自动保存草稿 ==================
+
+// ==================== 自动保存草稿 (Browser only, no sync) ==================
 function saveDraft() {
     updateAllCheckboxHiddenValues();
     const draft = {
@@ -1217,7 +1217,7 @@ if (window.part2Btn) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('📄 Initializing...');
+    console.log('📄 Initializing IWTS - Manual Sync Only...');
     
     await initDB();
     await initSyncDB();
@@ -1294,7 +1294,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     setupEnterKeyNavigation();
     
-    console.log('✅ All ready! Smart input works, checkboxes save as TRUE/FALSE in Excel.');
+    // Message when coming back online - no auto-sync
+    window.addEventListener('online', () => {
+        showSyncStatus('🔄 Connection restored. Data will sync when you click EXPORT button.', false);
+    });
+    
+    console.log('✅ All ready! Data auto-saves to browser only. Sync to R2 only on EXPORT.');
 });
 
 document.getElementById('exportAndSyncBtn')?.addEventListener('click', exportAndSync);
