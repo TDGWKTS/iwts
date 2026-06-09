@@ -1039,6 +1039,7 @@ function showSyncStatus(message, isError = false) {
 }
 
 // ==================== EXPORT & SYNC ==================
+// ==================== EXPORT & SYNC (Manual only - no auto-sync) ==================
 async function exportAndSync() {
     const date = document.getElementById('inspectDate')?.value;
     const inspected = document.getElementById('inspectedBy')?.value.trim();
@@ -1052,11 +1053,25 @@ async function exportAndSync() {
     
     try {
         const formData = collectFormDataForExport();
+        
+        // Only save to main DB (browser storage)
         await saveToMainDB(formData);
+        
+        // Save to sync DB temporarily for R2 upload
         await saveToSyncDB(formData);
         
+        // Sync to Cloudflare R2 (only happens when user clicks export)
         const result = await syncAllPending();
         
+        if (result.synced > 0) {
+            showSyncStatus(`✅ Synced ${result.synced} record(s) to Cloudflare R2`, false);
+        }
+        
+        if (result.failed > 0) {
+            showSyncStatus(`⚠️ ${result.failed} record(s) failed to sync`, true);
+        }
+        
+        // Generate Excel file
         const worksheetData = [EXCEL_HEADERS];
         const rowData = EXCEL_HEADERS.map(header => formData[header] || '');
         worksheetData.push(rowData);
@@ -1065,8 +1080,7 @@ async function exportAndSync() {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, `IWTS_${date}`);
         
-        // ========== FIX: Hong Kong date for filename, inspection time for time part ==========
-        // 1. Get Hong Kong current date for the filename
+        // Get Hong Kong current date for filename
         const now = new Date();
         const hkDate = new Date(now.getTime() + (8 * 60 * 60 * 1000));
         const hkYear = hkDate.getUTCFullYear();
@@ -1074,15 +1088,15 @@ async function exportAndSync() {
         const hkDay = String(hkDate.getUTCDate()).padStart(2, '0');
         const hkDateString = `${hkYear}-${hkMonth}-${hkDay}`;
         
-        // 2. Use the inspection time from the form (user input)
+        // Use inspection time from form for filename
         let timeForFilename = time.replace(/[:]/g, '').substring(0, 4);
-        // ================================================================
         
         const filename = `IWTS_Inspection_${hkDateString}_${inspected}_${timeForFilename}.xlsx`;
         XLSX.writeFile(wb, filename);
         
-        showSyncStatus(`✅ Exported! Form clearing...`);
+        showSyncStatus(`✅ Excel exported with 1 record! Clearing form...`);
         
+        // Reset form
         document.getElementById('inspectionForm')?.reset();
         document.getElementById('inspectDate').value = new Date().toISOString().split('T')[0];
         document.getElementById('inspectTime').value = '';
@@ -1101,13 +1115,13 @@ async function exportAndSync() {
         }
         
         localStorage.removeItem(DRAFT_KEY);
+        showSyncStatus(`✅ Export & sync complete! Ready for next inspection.`);
         
     } catch (error) {
         console.error('Export error:', error);
         showSyncStatus(`❌ Failed: ${error.message}`, true);
     }
 }
-
 // ==================== 自动保存草稿 ==================
 function saveDraft() {
     updateAllCheckboxHiddenValues();
